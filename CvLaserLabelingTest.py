@@ -14,14 +14,12 @@ mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
 mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
 mask = cv2.bitwise_or(mask1, mask2)
 
-# Optionally, clean up the mask using morphological operations
+# Clean up the mask using morphological operations
 kernel = np.ones((5, 5), np.uint8)
 mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
 mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
 
-# Find contours in the mask
 contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
 if contours:
     largest_contour = max(contours, key=cv2.contourArea)
     M = cv2.moments(largest_contour)
@@ -31,7 +29,6 @@ if contours:
     else:
         centerX, centerY = 0, 0
 
-    # Draw a circle at the detected center
     cv2.circle(image, (centerX, centerY), 10, (0, 255, 0), -1)  # Green circle
     x, y, w, h = cv2.boundingRect(largest_contour)
     cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)  # Blue rectangle
