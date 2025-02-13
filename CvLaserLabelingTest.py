@@ -2,18 +2,18 @@ import cv2
 import numpy as np
 
 # Load the image (replace 'input_image.jpg' with your image file)
-image = cv2.imread('LaserPath/TestImages/lsrdImage.jpg')
+image = cv2.imread('LaserPath/TestImages/LaserOnFE.jpg')
 
 # Convert the image from BGR to HSV color space
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
 # Define lower and upper ranges for the red color in HSV.
 # Note: Red spans across the 0 and 180 hue values, so we use two ranges.
-lower_red1 = np.array([0, 100, 100])
+lower_red1 = np.array([0, 230, 230])
 upper_red1 = np.array([10, 255, 255])
 mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
 
-lower_red2 = np.array([160, 100, 100])
+lower_red2 = np.array([160, 230, 230])
 upper_red2 = np.array([179, 255, 255])
 mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
 
@@ -54,7 +54,7 @@ else:
     print("No red laser beam detected.")
 
 # Save the annotated image to a file
-cv2.imwrite("output_image.jpg", image)
+cv2.imwrite("LaserPath/TestImages/lbdLaserOnFE.jpg", image)
 
 # Optionally, display the result in a window (press any key to close)
 cv2.imshow("Detected Laser", image)
