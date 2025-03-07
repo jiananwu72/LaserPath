@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 import sys
-sys.path.append('LaserPath')
+import os
+sys.path.append(os.path.expanduser("~/Laser"))
+from functions import laser_function as lf 
 
-from Utils.FindLaser import FindLaser
-
-def VideoReturn():
+def video_return():
     cap = cv2.VideoCapture('/dev/video0', cv2.CAP_V4L)
     out = None
         
@@ -18,7 +18,7 @@ def VideoReturn():
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
             out = cv2.VideoWriter('LaserPath/output.mp4', fourcc, fps, (width, height))
         
-        laser_pos = FindLaser(frame)
+        laser_pos = lf.find_laser(frame)
         if laser_pos:
             centerX, centerY = laser_pos
             print("Laser position:", centerX, centerY)
@@ -29,7 +29,7 @@ def VideoReturn():
         out.write(frame)
 
 def main():
-    VideoReturn()
+    video_return()
 
 if __name__ == "__main__":
     main()
